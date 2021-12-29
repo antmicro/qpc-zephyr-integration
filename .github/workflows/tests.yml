@@ -25,3 +25,16 @@ jobs:
           export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
           cd qpc/ports/zephyr/
           west build -b nrf52840dk_nrf52840 -s app
+      - name: Run tests in Renode
+        uses: antmicro/renode-test-action@v1.0.0
+        with:
+          renode-version: 'latest'
+          tests-to-run: 'tests.robot'
+      - name: Upload results
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: |
+            report.html
+            log.html
+            robot_output.xml
