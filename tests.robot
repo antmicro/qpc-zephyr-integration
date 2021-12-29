@@ -1,4 +1,5 @@
 *** Settings ***
+Library  OperatingSystem
 Suite Setup                   Setup
 Suite Teardown                Teardown
 Test Setup                    Reset Emulation
@@ -14,12 +15,12 @@ ${PROMPT}                     uart:~$
 Prepare Sample
     [Arguments]                 ${sample_name}
 
-    Execute Command             $bin="${sample_name}.elf"
+    Execute Command             $bin="${sample_name}"
     Execute Script              ${SCRIPT}
     Create Terminal Tester      ${UART}
 
 *** Test Cases ***
 Should Run Hello QPc
-    Prepare Sample              zephyr
+    Prepare Sample              %{ZEPHYR_HELLO}
     Start Emulation
     Wait for Line on Uart       Hello QPc

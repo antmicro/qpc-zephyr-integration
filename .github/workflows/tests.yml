@@ -18,6 +18,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Download and build Zephyr
+        id: build
         run: |
           git clone https://github.com/antmicro/qpc.git -b zephyr qpc
           west init -l qpc/ --mf ports/zephyr/west.yml
@@ -27,17 +28,11 @@ jobs:
           export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
           cd qpc/ports/zephyr/
           west build -b nrf52840dk_nrf52840 -s app
-          cp build/zephyr/zephyr.elf ~
-          pwd
-          cd ~
-          pwd
-          ls
-      - name: Sanity checks
-        run: |
-          pwd
-          ls
+          echo "::set-output name=zephyr_elf::$PWD/build/zephyr/zephyr.elf"
       - name: Run tests in Renode
         uses: antmicro/renode-test-action@v2.0.0
+        env:
+          ZEPHYR_HELLO: ${{ steps.build.outputs.zephyr_elf }}
         with:
           renode-version: 'latest'
           tests-to-run: 'tests.robot'
