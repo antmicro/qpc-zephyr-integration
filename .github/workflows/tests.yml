@@ -27,8 +27,15 @@ jobs:
           export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
           cd qpc/ports/zephyr/
           west build -b nrf52840dk_nrf52840 -s app
-          cp build/zephyr/zephyr.elf ../../../
-          cd
+          cp build/zephyr/zephyr.elf ~
+          pwd
+          cd ~
+          pwd
+          ls
+      - name: Sanity checks
+        run: |
+          pwd
+          ls
       - name: Run tests in Renode
         uses: antmicro/renode-test-action@v2.0.0
         with:
