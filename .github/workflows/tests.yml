@@ -25,6 +25,8 @@ jobs:
           export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
           cd qpc/ports/zephyr/
           west build -b nrf52840dk_nrf52840 -s app
+          cp build/zephyr/zephyr.elf ../../../
+          cd ../../../
       - name: Run tests in Renode
         uses: antmicro/renode-test-action@v1.0.0
         with:
