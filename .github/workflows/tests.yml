@@ -1,0 +1,27 @@
+name: Main Tests Pipeline
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  schedule:
+    - cron: '0 2 * * *' # run daily at 02:00 am (UTC)
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    container: zephyrprojectrtos/ci:latest
+    env:
+      CMAKE_PREFIX_PATH: /opt/toolchains
+    steps:
+      - name: Download and build Zephyr
+        run: |
+          git clone https://github.com/antmicro/qpc.git -b zephyr qpc
+          west init -l qpc/ --mf ports/zephyr/west.yml
+          west update
+          west zephyr-export
+          export ZEPHYR_BASE=$PWD/zephyr
+          export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
+          cd qpc/ports/zephyr/
+          west build -b nrf52840dk_nrf52840 -s app
