@@ -44,3 +44,19 @@ jobs:
             report.html
             log.html
             robot_output.xml
+      - name: Deploy
+        if: github.ref == 'refs/heads/master'
+        run: |
+          mkdir deploy
+          mv report.html robot_output.xml log.html deploy
+          touch deploy/.nojekyll
+          echo '<head> <meta http-equiv="refresh" content="0; url=report.html" /> </head>' > deploy/index.html
+          cd deploy
+          git init
+          cp ../.git/config ./.git/config
+          git add .
+          git config --local user.email "push@gha"
+          git config --local user.name "GHA"
+          git commit -am "update ${{ github.sha }}"
+          git push -u origin +HEAD:gh-pages
+          rm -rf .git
