@@ -30,7 +30,7 @@ jobs:
           west build -b nrf52840dk_nrf52840 -s app
           echo "::set-output name=zephyr_elf::$PWD/build/zephyr/zephyr.elf"
       - name: Run tests in Renode
-        uses: antmicro/renode-test-action@v2.0.0
+        uses: antmicro/renode-test-action@zephyr-fix
         env:
           ZEPHYR_HELLO: ${{ steps.build.outputs.zephyr_elf }}
         with:
