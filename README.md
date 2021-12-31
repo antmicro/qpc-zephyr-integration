@@ -1,5 +1,7 @@
 # QP/C - Zephyr Integration
 
+Copyright (c) 2021 [Antmicro](https://www.antmicro.com)
+
 The purpose of this repository is to run continous testing of the Zephyr port of QP/C.
 
 The actual development is happening in a [QP/C fork](https://github.com/antmicro/qpc/tree/zephyr).
