@@ -21,12 +21,12 @@ jobs:
         id: build
         run: |
           git clone https://github.com/antmicro/qpc.git -b zephyr qpc
-          west init -l qpc/ --mf ports/zephyr/west.yml
+          west init -l qpc --mf examples/zephyr/arm-cm/dpp_nrf52840dk/west.yml
           west update
           west zephyr-export
           export ZEPHYR_BASE=$PWD/zephyr
           export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
-          cd qpc/ports/zephyr/
+          cd qpc/examples/zephyr/arm-cm/dpp_nrf52840dk
           west build -b nrf52840dk_nrf52840 -s app
           echo "::set-output name=zephyr_elf::$PWD/build/zephyr/zephyr.elf"
       - name: Run tests in Renode
