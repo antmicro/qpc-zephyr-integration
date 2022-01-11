@@ -20,13 +20,15 @@ jobs:
       - name: Download and build Zephyr
         id: build
         run: |
-          git clone https://github.com/antmicro/qpc.git -b zephyr qpc
-          west init -l qpc --mf examples/zephyr/arm-cm/blinky_nrf52840dk/west.yml
+          git clone https://github.com/antmicro/qpc.git -b v6.9.3 qpc
+          git clone https://github.com/antmicro/qpc-zephyr-port.git
+          west init -l qpc-zephyr-port --mf apps/blinky/west.yml
           west update
           west zephyr-export
           export ZEPHYR_BASE=$PWD/zephyr
           export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
-          cd qpc/examples/zephyr/arm-cm/blinky_nrf52840dk
+          export QPC_PATH=$PWD/qpc
+          cd qpc-zephyr-port/apps/blinky
           west build -b nrf52840dk_nrf52840 -s app
           echo "::set-output name=zephyr_elf::$PWD/build/zephyr/zephyr.elf"
       - name: Run tests in Renode
