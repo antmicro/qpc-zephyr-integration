@@ -36,9 +36,23 @@ Should Run Blinky QPc sample
 Should Run DPP sample
     Prepare Sample              %{ZEPHYR_QPC_DPP}
     Start Emulation
-    Wait for Line on Uart       Philosopher  0 is thinking
-    Wait for Line on Uart       Philosopher  1 is thinking
-    Wait for Line on Uart       Philosopher  2 is thinking
-    Wait for Line on Uart       Philosopher  3 is thinking
-    Wait for Line on Uart       Philosopher  4 is thinking
-    Wait For Line On Uart       Philosopher  \\d+ is hungry                   treatAsRegex=true
+    Wait for Line on Uart       Philosopher 0 is thinking
+    Wait for Line on Uart       Philosopher 1 is thinking
+    Wait for Line on Uart       Philosopher 2 is thinking
+    Wait for Line on Uart       Philosopher 3 is thinking
+    Wait for Line on Uart       Philosopher 4 is thinking
+    Wait for Line on Uart       Philosopher 0 is hungry
+    Wait for Line on Uart       Philosopher 0 is eating
+    Wait for Line on Uart       Philosopher 0 is thinking
+    Wait for Line on Uart       Philosopher 1 is hungry
+    Wait for Line on Uart       Philosopher 1 is eating
+    Wait for Line on Uart       Philosopher 1 is thinking
+    Wait for Line on Uart       Philosopher 2 is hungry
+    Wait for Line on Uart       Philosopher 2 is eating
+    Wait for Line on Uart       Philosopher 2 is thinking
+    Wait for Line on Uart       Philosopher 3 is hungry
+    Wait for Line on Uart       Philosopher 3 is eating
+    Wait for Line on Uart       Philosopher 3 is thinking
+    Wait for Line on Uart       Philosopher 4 is hungry
+    Wait for Line on Uart       Philosopher 4 is eating
+    Wait for Line on Uart       Philosopher 4 is thinking
