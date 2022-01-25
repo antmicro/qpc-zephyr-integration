@@ -28,13 +28,19 @@ jobs:
           export ZEPHYR_BASE=$PWD/zephyr
           export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
           export QPC_PATH=$PWD/qpc
-          cd qpc-zephyr-port/apps/blinky
+          cd qpc-zephyr-port/apps
+          cd blinky
           west build -b nrf52840dk_nrf52840 -s app
-          echo "::set-output name=zephyr_elf::$PWD/build/zephyr/zephyr.elf"
+          echo "::set-output name=zephyr_elf_blinky::$PWD/build/zephyr/zephyr.elf"
+          cd ..
+          cd dpp
+          west build -b nrf52840dk_nrf52840 -s app
+          echo "::set-output name=zephyr_elf_dpp::$PWD/build/zephyr/zephyr.elf"
       - name: Run tests in Renode
         uses: antmicro/renode-test-action@zephyr-fix
         env:
-          ZEPHYR_HELLO: ${{ steps.build.outputs.zephyr_elf }}
+          ZEPHYR_QPC_BLINKY: ${{ steps.build.outputs.zephyr_elf_blinky }}
+          ZEPHYR_QPC_DPP:    ${{ steps.build.outputs.zephyr_elf_dpp }}
         with:
           renode-version: 'latest'
           tests-to-run: 'tests.robot'
