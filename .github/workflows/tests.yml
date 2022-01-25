@@ -29,6 +29,10 @@ jobs:
           export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
           export QPC_PATH=$PWD/qpc
           cd qpc-zephyr-port/apps
+          cd hello
+          west build -b nrf52840dk_nrf52840 -s app
+          echo "::set-output name=zephyr_elf_hello::$PWD/build/zephyr/zephyr.elf"
+          cd ..
           cd blinky
           west build -b nrf52840dk_nrf52840 -s app
           echo "::set-output name=zephyr_elf_blinky::$PWD/build/zephyr/zephyr.elf"
@@ -39,6 +43,7 @@ jobs:
       - name: Run tests in Renode
         uses: antmicro/renode-test-action@zephyr-fix
         env:
+          ZEPHYR_QPC_HELLO:  ${{ steps.build.outputs.zephyr_elf_hello }}
           ZEPHYR_QPC_BLINKY: ${{ steps.build.outputs.zephyr_elf_blinky }}
           ZEPHYR_QPC_DPP:    ${{ steps.build.outputs.zephyr_elf_dpp }}
         with:

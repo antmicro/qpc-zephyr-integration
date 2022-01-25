@@ -20,6 +20,11 @@ Prepare Sample
     Create Terminal Tester      ${UART}
 
 *** Test Cases ***
+Should Run Hello QPc sample
+    Prepare Sample              %{ZEPHYR_QPC_HELLO}
+    Start Emulation
+    Wait for Line on Uart       Hello QPc
+
 Should Run Blinky QPc sample
     Prepare Sample              %{ZEPHYR_QPC_BLINKY}
     Start Emulation
